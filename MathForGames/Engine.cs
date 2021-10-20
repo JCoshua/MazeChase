@@ -23,9 +23,9 @@ namespace MathForGames
             //Call Start for the entire application
             Start();
 
-            float currentTime = 0;
+            float currentTime;
             float lastTime = 0;
-            float deltaTime = 0;
+            float deltaTime;
             //Loop until the application is told to close
             while(!_applicationShouldClose && !Raylib.WindowShouldClose())
             {
@@ -58,16 +58,12 @@ namespace MathForGames
 
             //Create a window using RayLib
             Raylib.InitWindow(800, 450, "Math For Games");
-            Raylib.SetTargetFPS(0);
+            Raylib.SetTargetFPS(2400);
 
             Scene scene = new Scene();
-            Player player = new Player('@', 10, 10, 50, Color.WHITE, "Player");
-            Actor actor = new Actor('A', 10, 10, Color.RED, "Opponent");
             AddScene(scene);
-            scene.AddActor(player);
-            scene.AddActor(actor);
-            _scenes[_currentSceneIndex].Start();
 
+            _scenes[_currentSceneIndex].Start();
         }
 
         /// <summary>
@@ -76,6 +72,7 @@ namespace MathForGames
         private void Update(float deltaTime)
         {
             _scenes[_currentSceneIndex].Update(deltaTime);
+            _scenes[_currentSceneIndex].UpdateUI(deltaTime);
         }
 
         /// <summary>
@@ -84,10 +81,11 @@ namespace MathForGames
         private void Draw()
         {
             Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.DARKGREEN);
+            Raylib.ClearBackground(Color.BLACK);
 
             //Adds all actor icons to buffer
             _scenes[_currentSceneIndex].Draw();
+            _scenes[_currentSceneIndex].DrawUI();
 
             Raylib.EndDrawing();
         }

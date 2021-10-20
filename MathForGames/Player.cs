@@ -23,8 +23,8 @@ namespace MathForGames
             set { _velocity = value; }
         }
 
-        public Player(char icon, float x, float y, float speed, Color color, string name = "Actor")
-            : base(icon, x, y, color, name)
+        public Player(char icon, float x, float y, float speed, float radius, Color color, string name = "Actor")
+            : base(icon, x, y, radius, color, name)
         {
             _speed = speed;
         }
@@ -36,7 +36,7 @@ namespace MathForGames
             int yDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W)) + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
 
             //Creates a vector that stores the move input
-            Vector2 moveDirection = new Vector2( xDirection, yDirection);
+            Vector2 moveDirection = new Vector2(xDirection, yDirection);
 
             Velocity = moveDirection.Normalized * Speed * deltaTime;
             Position += Velocity;
@@ -44,7 +44,7 @@ namespace MathForGames
 
         public override void OnCollision(Actor actor)
         {
-
+            base.OnCollision(actor);
         }
     }
 }

@@ -18,6 +18,8 @@ namespace MathForGames
         private string _name;
         private Vector2 _position;
         private bool _started;
+        private Vector2 _forwards = new Vector2(1, 0);
+        private float _radius;
 
         public bool Started
         {
@@ -40,14 +42,29 @@ namespace MathForGames
             get { return _icon; }
             set { _icon = value; }
         }
-        public Actor(char icon, float x, float y, Color color, string name = "Actor"):
-            this(icon, new Vector2 { x = x, y = y }, color, name) {}
 
-        public Actor(char icon, Vector2 position, Color color, string name = "Actor")
+        public Vector2 Forwards
+        {
+            get { return _forwards; }
+            set { _forwards = value; }
+        }
+
+        public float Radius
+        {
+            get { return _radius; }
+            set { _radius = value; }
+        }
+
+        public Actor(char icon, float x, float y, float radius, Color color, string name = "Actor") :
+            this(icon, new Vector2 { x = x, y = y }, radius, color, name)
+        { }
+
+        public Actor(char icon, Vector2 position, float radius, Color color, string name = "Actor")
         {
             _icon = new Icon { Symbol = icon, Color = color };
             _position = position;
             _name = name;
+            _radius = radius;
         }
 
         public virtual void Start()
@@ -72,7 +89,30 @@ namespace MathForGames
 
         public virtual void OnCollision(Actor actor)
         {
-            Console.WriteLine("Collision occured");
+            if (actor.Name == "Upper Wall" && Name != "Upper Wall")
+            {
+                Position += new Vector2(0, 5);
+                Console.WriteLine("Collision Detection");
+            }
+
+            if (actor.Name == "Lower Wall" && Name != "Lower Wall")
+            {
+                Position += new Vector2(0, -5);
+                Console.WriteLine("Collision Detection");
+            }
+        }
+
+        /// <summary>
+        /// Checks for actor collision
+        /// </summary>
+        /// <param name="other">The other actor to check collision against</param>
+        /// <returns>True if the distance between the two actors is less than their combined radii</returns>
+        public virtual bool CheckCollision(Actor other)
+        {
+            float collisionRadii = other.Radius + Radius;
+            float distance = Vector2.Distance(Position, other.Position);
+
+            return distance <= collisionRadii;
         }
     }
 }
