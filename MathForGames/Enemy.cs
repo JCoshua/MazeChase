@@ -42,7 +42,6 @@ namespace MathForGames
                 Position += Velocity;
                 Forwards = moveDirection;
             }
-                
         }
 
         public bool GetTargetInSight()
@@ -54,7 +53,11 @@ namespace MathForGames
 
         public override void OnCollision(Actor actor)
         {
-            base.OnCollision(actor);
+            if (actor.Name == "Wall")
+            {
+                Position -= Velocity;
+                Console.WriteLine("Collision Detection");
+            }
         }
     }
 }

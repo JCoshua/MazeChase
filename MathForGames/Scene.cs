@@ -29,19 +29,26 @@ namespace MathForGames
         /// </summary>
         public virtual void Start()
         {
-            Player player = new Player('@', 10, 50, 100, 15, Color.WHITE, "Player");
-            Enemy enemy = new Enemy('A', 10, 50, 50, 15, Color.RED, "Opponent");
+            Player player = new Player('@', 125, 50, 100, 20, Color.WHITE, "Player");
+            Enemy enemy = new Enemy('A', 50, 125, 50, 20, Color.RED, "Opponent");
             AddActor(player);
             AddActor(enemy);
 
-            for (int i = 10; i < 750; i++)
+            for (int i = 11; i < 750; i++)
             {
-                Actor upperWall = new Actor('-', i, 0, 1, Color.WHITE, "Upper Wall");
-                Actor LowerWall = new Actor('-', i, 390, 1, Color.WHITE, "Lower Wall");
+                Actor upperWall = new Actor('═', i, 10, 5, Color.WHITE, "Wall");
+                Actor lowerWall = new Actor('▄', i, 390, 5, Color.WHITE, "Wall");
                 AddActor(upperWall);
-                AddActor(LowerWall);
+                AddActor(lowerWall);
             }
-
+            
+            for(int i = 11; i < 350; i++)
+            {
+                Actor leftWall = new Actor('|', 10, i + 15, 5, Color.WHITE, "Wall");
+                Actor rightWall = new Actor('|', 770, i + 15, 5, Color.WHITE, "Wall");
+                AddActor(leftWall);
+                AddActor(rightWall);
+            }
             for (int i = 0; i < _actors.Length; i++)
                 _actors[i].Start();
         }
@@ -63,6 +70,9 @@ namespace MathForGames
                 for (int j = 0; j < _actors.Length; j++)
                     if (_actors[i].CheckCollision(_actors[j]) && i != j)
                         _actors[i].OnCollision(_actors[j]);
+
+                if (_actors[i].ToBeRemoved)
+                    RemoveActor(_actors[i]);
             }
         }
 
@@ -101,7 +111,7 @@ namespace MathForGames
         /// Adds an actor to the scenes list of actors
         /// </summary>
         /// <param name="actor"></param>
-        public void AddActor(Actor actor)
+        public static void AddActor(Actor actor)
         {
             //Creates a temp array larger than the original
             Actor[] tempArray = new Actor[_actors.Length + 1];
@@ -140,7 +150,7 @@ namespace MathForGames
         /// </summary>
         /// <param name="actor">The actor to remove</param>
         /// <returns>If the removal was successful</returns>
-        public bool RemoveActor(Actor actor)
+        public static bool RemoveActor(Actor actor)
         {
             //Creates a variable to store if the removal was successful
             bool actorRemoved = false;
@@ -154,7 +164,7 @@ namespace MathForGames
             {
                 if (_actors[i] != actor)
                 {
-                    tempArray[i] = _actors[i];
+                    tempArray[j] = _actors[i];
                     j++;
                 }
                 else
@@ -199,6 +209,13 @@ namespace MathForGames
                 _UIElements = tempArray;
 
             return actorRemoved;
+        }
+
+        public static void BulletFired(Actor actor)
+        {
+            Bullet bullet = new Bullet('°', actor.Position, actor.Forwards, 250, 10, actor.Icon.Color, actor, "Bullet");
+            AddActor(bullet);
+            return;
         }
     }
 }

@@ -20,6 +20,7 @@ namespace MathForGames
         private bool _started;
         private Vector2 _forwards = new Vector2(1, 0);
         private float _radius;
+        private bool _toBeRemoved;
 
         public bool Started
         {
@@ -55,6 +56,12 @@ namespace MathForGames
             set { _radius = value; }
         }
 
+        public bool ToBeRemoved
+        {
+            get { return _toBeRemoved; }
+            set { _toBeRemoved = value; }
+        }
+
         public Actor(char icon, float x, float y, float radius, Color color, string name = "Actor") :
             this(icon, new Vector2 { x = x, y = y }, radius, color, name)
         { }
@@ -74,12 +81,12 @@ namespace MathForGames
 
         public virtual void Update(float deltaTime)
         {
-
         }
 
         public virtual void Draw()
         {
-            Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x, (int)Position.y, 50, Icon.Color);
+            Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 20, (int)Position.y - 20, 40, Icon.Color);
+            Raylib.DrawCircleLines((int)Position.x, (int)Position.y, Radius, Color.RED);
         }
 
         public virtual void End()
@@ -89,17 +96,7 @@ namespace MathForGames
 
         public virtual void OnCollision(Actor actor)
         {
-            if (actor.Name == "Upper Wall" && Name != "Upper Wall")
-            {
-                Position += new Vector2(0, 5);
-                Console.WriteLine("Collision Detection");
-            }
-
-            if (actor.Name == "Lower Wall" && Name != "Lower Wall")
-            {
-                Position += new Vector2(0, -5);
-                Console.WriteLine("Collision Detection");
-            }
+            
         }
 
         /// <summary>

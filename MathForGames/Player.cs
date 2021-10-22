@@ -35,16 +35,29 @@ namespace MathForGames
             int xDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_A)) + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_D));
             int yDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W)) + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
 
+            if(Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE))
+            {
+                Scene.BulletFired(this);
+            }
+
             //Creates a vector that stores the move input
             Vector2 moveDirection = new Vector2(xDirection, yDirection);
 
-            Velocity = moveDirection.Normalized * Speed * deltaTime;
-            Position += Velocity;
+            if(xDirection != 0 || yDirection != 0)
+            {
+                Velocity = moveDirection.Normalized * Speed * deltaTime;
+                Position += Velocity;
+                Forwards = moveDirection;
+            }
         }
 
         public override void OnCollision(Actor actor)
         {
-            base.OnCollision(actor);
+            if (actor.Name == "Wall")
+            {
+                Position -= Velocity;
+                Console.WriteLine("Collision Detection");
+            }
         }
     }
 }
