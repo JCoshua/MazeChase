@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MathLibrary;
+using Raylib_cs;
 
 namespace MathForGames
 {
@@ -10,18 +11,27 @@ namespace MathForGames
         private float _width;
         private float _height;
 
+        /// <summary>
+        /// The size of the collider on the x axis
+        /// </summary>
         public float Width
         {
             get { return _width; }
             set { _width = value; }
         }
 
+        /// <summary>
+        /// The size of the collider on the y axis
+        /// </summary>
         public float Height
         {
             get { return _height; }
             set { _height = value; }
         }
 
+        /// <summary>
+        /// The furthest Left X value of this collider
+        /// </summary>
         public float Left
         {
             get
@@ -30,6 +40,9 @@ namespace MathForGames
             }
         }
 
+        /// <summary>
+        /// The furthest right X value of this collider
+        /// </summary>
         public float Right
         {
             get
@@ -38,6 +51,9 @@ namespace MathForGames
             }
         }
 
+        /// <summary>
+        /// The Highest Y Value of this collider
+        /// </summary>
         public float Top
         {
             get
@@ -46,6 +62,9 @@ namespace MathForGames
             }
         }
 
+        /// <summary>
+        /// The Lowest Y Value of this collider
+        /// </summary>
         public float Bottom
         {
             get
@@ -62,16 +81,25 @@ namespace MathForGames
 
         public override bool CheckCollisionCircle(CircleCollider other)
         {
+            return other.CheckCollisionAABB(this);
+        }
+
+        public override bool CheckCollisionAABB(AABBCollider other)
+        {
+            //Checks if the other Collider and this collider belong to the same owner
             if (other.Owner == Owner)
                 return false;
 
-            //Finds the distatnce between the two actors
-            float distance = Vector2.Distance(other.Owner.Position, Owner.Position);
+            //Returns True if there is an overlap betweens the two colliders
+            return other.Left <= Right &&
+                   other.Top <= Bottom &&
+                   Left <= other.Right &&
+                   Top <= other.Bottom;
+        }
 
-            //Find the length of teh raddi combined
-            float combinedRadii = other.CollisionRadius;
-
-            return distance <= combinedRadii;
+        public override void Draw()
+        {
+                Raylib.DrawRectangleLines((int)Left, (int)Top, (int)Width, (int)Height, Color.RED);
         }
     }
 }

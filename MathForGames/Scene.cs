@@ -53,7 +53,7 @@ namespace MathForGames
 
                 _actors[i].Update(deltaTime);
 
-                if (_actors[i].Name != "HorizontalWall" && _actors[i].Name != "HorizontalWall")
+                if (_actors[i].Name != "HorizontalWall" && _actors[i].Name != "VerticalWall")
                     //Checks for collision
                     for (int j = 0; j < _actors.Length; j++)
                     if (_actors[i].CheckCollision(_actors[j]) && i != j)

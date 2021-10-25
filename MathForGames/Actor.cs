@@ -88,11 +88,12 @@ namespace MathForGames
         public virtual void Draw()
         {
             if(Name == "VerticalWall")
-                Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 3, (int)Position.y - 30, 40, Icon.Color);
+                Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 3, (int)Position.y - 18, 40, Icon.Color);
 
             else if(Name == "HorizontalWall")
-                Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 8, (int)Position.y - 18, 40, Icon.Color);
-
+                Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 9, (int)Position.y - 18, 40, Icon.Color);
+            if (Raylib.IsKeyDown(KeyboardKey.KEY_TAB))
+                Collider.Draw();
         }
 
         public virtual void End()

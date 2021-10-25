@@ -35,6 +35,7 @@ namespace MathForGames
             int xDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_A)) + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_D));
             int yDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W)) + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
 
+            //Allows
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE))
             {
                 Engine.Manager.BulletFired(this);
@@ -54,6 +55,9 @@ namespace MathForGames
         public override void Draw()
         {
             Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 14, (int)Position.y - 22, 40, Icon.Color);
+
+            if (Raylib.IsKeyDown(KeyboardKey.KEY_TAB))
+                Collider.Draw();
         }
 
 
@@ -61,12 +65,12 @@ namespace MathForGames
         {
             if (actor.Name == "HorizontalWall")
             {
-                Position -= Velocity/5;
+                Position -= Velocity;
                 Console.WriteLine("Collision Detection");
             }
             else if(actor.Name == "VerticalWall")
             {
-                Position -= Velocity / 2;
+                Position -= Velocity;
                 Console.WriteLine("Collision Detected");
             }
         }

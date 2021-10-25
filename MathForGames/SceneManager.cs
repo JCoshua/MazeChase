@@ -55,24 +55,28 @@ namespace MathForGames
 
         private void IntializeArena()
         {
-            Player player = new Player('@', 400, 200, 100, Color.BLUE, "Player");
-            player.Collider = new CircleCollider(15, player);
-            Enemy enemy = new Enemy('A', 50, 125, 50, Color.RED, "Opponent");
-            enemy.Collider = new CircleCollider(15, enemy);
+            Player player = new Player('@', 200, 200, 100, Color.BLUE, "Player");
+            player.Collider = new AABBCollider(30, 30, player);
+            Enemy enemy = new Enemy('A', 50, 125, 50, player, Color.RED, "Opponent");
+            enemy.Collider = new AABBCollider(30, 30, enemy);
             _currentScene.AddActor(player);
             _currentScene.AddActor(enemy);
-            for (int i = 20; i < 770; i++)
+            for (int i = 21; i < 771; i++)
             {
                 Actor upperWall = new Actor('-', i, 20, Color.WHITE, "HorizontalWall");
-                Actor lowerWall = new Actor('-', i, 400, Color.WHITE, "HorizontalWall");
+                upperWall.Collider = new AABBCollider(19, 5, upperWall);
+                Actor lowerWall = new Actor('-', i, 405, Color.WHITE, "HorizontalWall");
+                lowerWall.Collider = new AABBCollider(19, 5, lowerWall);
                 _currentScene.AddActor(upperWall);
                 _currentScene.AddActor(lowerWall);
             }
 
-            for (int i = 50; i < 390; i++)
+            for (int i = 40; i < 390; i++)
             {
                 Actor leftWall = new Actor('|', 15, i, Color.WHITE, "VerticalWall");
+                leftWall.Collider = new AABBCollider(5, 38, leftWall);
                 Actor rightWall = new Actor('|', 776, i, Color.WHITE, "VerticalWall");
+                rightWall.Collider = new AABBCollider(5, 38, rightWall);
                 _currentScene.AddActor(leftWall);
                 _currentScene.AddActor(rightWall);
             }
