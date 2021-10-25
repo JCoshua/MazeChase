@@ -19,7 +19,7 @@ namespace MathForGames
         private Vector2 _position;
         private bool _started;
         private Vector2 _forwards = new Vector2(1, 0);
-        private float _radius;
+        private Collider _collider;
         private bool _toBeRemoved;
 
         public bool Started
@@ -50,10 +50,13 @@ namespace MathForGames
             set { _forwards = value; }
         }
 
-        public float Radius
+        /// <summary>
+        /// The Collider attached to the Actor
+        /// </summary>
+        public Collider Collider
         {
-            get { return _radius; }
-            set { _radius = value; }
+            get { return _collider; }
+            set { _collider = value; }
         }
 
         public bool ToBeRemoved
@@ -62,16 +65,15 @@ namespace MathForGames
             set { _toBeRemoved = value; }
         }
 
-        public Actor(char icon, float x, float y, float radius, Color color, string name = "Actor") :
-            this(icon, new Vector2 { x = x, y = y }, radius, color, name)
+        public Actor(char icon, float x, float y, Color color, string name = "Actor") :
+            this(icon, new Vector2 { x = x, y = y }, color, name)
         { }
 
-        public Actor(char icon, Vector2 position, float radius, Color color, string name = "Actor")
+        public Actor(char icon, Vector2 position, Color color, string name = "Actor")
         {
             _icon = new Icon { Symbol = icon, Color = color };
             _position = position;
             _name = name;
-            _radius = radius;
         }
 
         public virtual void Start()
@@ -85,8 +87,12 @@ namespace MathForGames
 
         public virtual void Draw()
         {
-            Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 20, (int)Position.y - 20, 40, Icon.Color);
-            Raylib.DrawCircleLines((int)Position.x, (int)Position.y, Radius, Color.RED);
+            if(Name == "VerticalWall")
+                Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 3, (int)Position.y - 30, 40, Icon.Color);
+
+            else if(Name == "HorizontalWall")
+                Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 8, (int)Position.y - 18, 40, Icon.Color);
+
         }
 
         public virtual void End()
@@ -106,10 +112,11 @@ namespace MathForGames
         /// <returns>True if the distance between the two actors is less than their combined radii</returns>
         public virtual bool CheckCollision(Actor other)
         {
-            float collisionRadii = other.Radius + Radius;
-            float distance = Vector2.Distance(Position, other.Position);
+            //Returns false if there is a null collider
+            if (Collider == null || other.Collider == null)
+                return false;
 
-            return distance <= collisionRadii;
+            return Collider.CheckCollision(other);
         }
     }
 }

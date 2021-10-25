@@ -7,19 +7,26 @@ namespace MathForGames
 {
     class Scene
     {
+        private string _name;
         /// <summary>
         /// An Array containing all actors in a scene
         /// </summary>
         private static Actor[] _actors;
         private static Actor[] _UIElements;
 
+        public string Name
+        { 
+            get { return _name; }
+        }
+
         public static Actor[] Actors
         {
             get { return _actors; }
         }
 
-        public Scene()
+        public Scene(string name)
         {
+            _name = name;
             _actors = new Actor[0];
             _UIElements = new Actor[0];
         }
@@ -29,26 +36,6 @@ namespace MathForGames
         /// </summary>
         public virtual void Start()
         {
-            Player player = new Player('@', 125, 50, 100, 20, Color.WHITE, "Player");
-            Enemy enemy = new Enemy('A', 50, 125, 50, 20, Color.RED, "Opponent");
-            AddActor(player);
-            AddActor(enemy);
-
-            for (int i = 11; i < 750; i++)
-            {
-                Actor upperWall = new Actor('═', i, 10, 5, Color.WHITE, "Wall");
-                Actor lowerWall = new Actor('▄', i, 390, 5, Color.WHITE, "Wall");
-                AddActor(upperWall);
-                AddActor(lowerWall);
-            }
-            
-            for(int i = 11; i < 350; i++)
-            {
-                Actor leftWall = new Actor('|', 10, i + 15, 5, Color.WHITE, "Wall");
-                Actor rightWall = new Actor('|', 770, i + 15, 5, Color.WHITE, "Wall");
-                AddActor(leftWall);
-                AddActor(rightWall);
-            }
             for (int i = 0; i < _actors.Length; i++)
                 _actors[i].Start();
         }
@@ -66,8 +53,9 @@ namespace MathForGames
 
                 _actors[i].Update(deltaTime);
 
-                //Checks for collision
-                for (int j = 0; j < _actors.Length; j++)
+                if (_actors[i].Name != "HorizontalWall" && _actors[i].Name != "HorizontalWall")
+                    //Checks for collision
+                    for (int j = 0; j < _actors.Length; j++)
                     if (_actors[i].CheckCollision(_actors[j]) && i != j)
                         _actors[i].OnCollision(_actors[j]);
 
@@ -111,7 +99,7 @@ namespace MathForGames
         /// Adds an actor to the scenes list of actors
         /// </summary>
         /// <param name="actor"></param>
-        public static void AddActor(Actor actor)
+        public void AddActor(Actor actor)
         {
             //Creates a temp array larger than the original
             Actor[] tempArray = new Actor[_actors.Length + 1];
@@ -150,7 +138,7 @@ namespace MathForGames
         /// </summary>
         /// <param name="actor">The actor to remove</param>
         /// <returns>If the removal was successful</returns>
-        public static bool RemoveActor(Actor actor)
+        public bool RemoveActor(Actor actor)
         {
             //Creates a variable to store if the removal was successful
             bool actorRemoved = false;
@@ -183,7 +171,7 @@ namespace MathForGames
         /// </summary>
         /// <param name="actor">The actor to remove</param>
         /// <returns>If the removal was successful</returns>
-        public static bool RemoveUIElement(Actor UI)
+        public bool RemoveUIElement(Actor UI)
         {
             //Creates a variable to store if the removal was successful
             bool actorRemoved = false;
@@ -211,11 +199,6 @@ namespace MathForGames
             return actorRemoved;
         }
 
-        public static void BulletFired(Actor actor)
-        {
-            Bullet bullet = new Bullet('°', actor.Position, actor.Forwards, 250, 10, actor.Icon.Color, actor, "Bullet");
-            AddActor(bullet);
-            return;
-        }
+        
     }
 }

@@ -23,8 +23,8 @@ namespace MathForGames
         /// <param name="width">The length of the text box</param>
         /// <param name="height">the width</param>
         /// <param name="text">the text within the box</param>
-        public UIText(float x, float y, float radius, string name, Color color, int width, int height, int fontSize, string text = "")
-            : base('\0', x, y, radius, color, name)
+        public UIText(float x, float y, string name, Color color, int width, int height, int fontSize, string text = "")
+            : base('\0', x, y, color, name)
         {
             Text = text;
             Width = width;

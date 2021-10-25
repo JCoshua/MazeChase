@@ -29,8 +29,8 @@ namespace MathForGames
             set { _velocity = value; }
         }
 
-        public Bullet(char icon, Vector2 position, Vector2 direction, float speed, float radius, Color color, Actor owner, string name = "Actor")
-            : base(icon, position, radius, color, name)
+        public Bullet(char icon, Vector2 position, Vector2 direction, float speed, Color color, Actor owner, string name = "Actor")
+            : base(icon, position, color, name)
         {
             _speed = speed;
             _owner = owner;
@@ -44,19 +44,31 @@ namespace MathForGames
 
         }
 
+        public override void Draw()
+        {
+            Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 6, (int)Position.y - 6, 40, Icon.Color);
+        }
+
         public override void OnCollision(Actor actor)
         {
             if (actor is Player && actor != _owner)
                 Engine.CloseApplication();
-            if (actor is Enemy && actor != _owner)
+            else if (actor is Enemy && actor != _owner)
             {
                 actor.ToBeRemoved = true;
                 ToBeRemoved = true;
             }
-            if (actor.Name == "Wall")
+            else if (actor is Bullet)
+            {
+                actor.ToBeRemoved = true;
+                ToBeRemoved = true;
+            }
+
+            else if (actor.Name == "Wall")
             {
                 ToBeRemoved = true;
             }
+            
         }
     }
 }

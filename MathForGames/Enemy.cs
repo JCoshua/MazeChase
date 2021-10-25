@@ -12,6 +12,7 @@ namespace MathForGames
         private Vector2 _velocity;
         private Actor _target;
         private float _maxViewAngle;
+        private float _fireTimer = 0;
 
         public float Speed
         {
@@ -25,8 +26,8 @@ namespace MathForGames
             set { _velocity = value; }
         }
 
-        public Enemy(char icon, float x, float y, float speed, float radius, Color color, string name = "Actor")
-            : base(icon, x, y, radius, color, name)
+        public Enemy(char icon, float x, float y, float speed, Color color, string name = "Actor")
+            : base(icon, x, y, color, name)
         {
             _speed = speed;
         }
@@ -36,12 +37,25 @@ namespace MathForGames
             _target = Scene.Actors[0];
             Vector2 moveDirection = (_target.Position - Position).Normalized;
 
+            _fireTimer += deltaTime;
+
             Vector2 Velocity = moveDirection * Speed * deltaTime;
             if (GetTargetInSight())
             {
                 Position += Velocity;
                 Forwards = moveDirection;
+
+                if(_fireTimer >= 5)
+                {
+                    Engine.Manager.BulletFired(this);
+                    _fireTimer = 0;
+                }
             }
+        }
+
+        public override void Draw()
+        {
+            Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 12, (int)Position.y - 17, 40, Icon.Color);
         }
 
         public bool GetTargetInSight()
@@ -53,10 +67,15 @@ namespace MathForGames
 
         public override void OnCollision(Actor actor)
         {
-            if (actor.Name == "Wall")
+            if (actor.Name == "HorizontalWall")
             {
-                Position -= Velocity;
+                Position -= Velocity / 5;
                 Console.WriteLine("Collision Detection");
+            }
+            else if (actor.Name == "VerticalWall")
+            {
+                Position -= Velocity / 2;
+                Console.WriteLine("Collision Detected");
             }
         }
     }
