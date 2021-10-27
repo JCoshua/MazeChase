@@ -16,6 +16,11 @@ namespace MathForGames
         private static Scene[] _scenes = new Scene[0];
         private Stopwatch _stopwatch = new Stopwatch();
 
+        public static int CurrentSceneIndex
+        {
+            get { return _currentSceneIndex; }
+            set { _currentSceneIndex = value; }
+        }
         public Scene[] Scenes
         {
             get { return _scenes; }
@@ -72,7 +77,7 @@ namespace MathForGames
             Raylib.InitWindow(800, 450, "Math For Games");
             Raylib.SetTargetFPS(2400);
 
-            Scene scene = new Scene("Arena");
+            Scene scene = new Scene("StartMenu");
             AddScene(scene);
 
             Manager.Start();
@@ -114,7 +119,7 @@ namespace MathForGames
         /// </summary>
         /// <param name="scene">That scene to be added</param>
         /// <returns>The Index of the added scene</returns>
-        public int AddScene(Scene scene)
+        public static int AddScene(Scene scene)
         {
             //Creates a new temporary array
             Scene[] tempArray = new Scene[_scenes.Length + 1];
@@ -133,20 +138,6 @@ namespace MathForGames
 
             //Retrun the last index
             return _scenes.Length - 1;
-        }
-
-        /// <summary>
-        /// Gets the next key pressed in the input stream
-        /// </summary>
-        /// <returns>The key that was pressed (if any)</returns>
-        public static ConsoleKey GetNextKey()
-        {
-            //Returns the current key being pressed
-            if(Console.KeyAvailable)
-            return Console.ReadKey(true).Key;
-
-            //If there is no key being pressed
-            return 0;
         }
 
         public static void CloseApplication()

@@ -26,11 +26,12 @@ namespace MathForGames
             set { _velocity = value; }
         }
 
-        public Enemy(char icon, float x, float y, float speed, Actor target, Color color, string name = "Actor")
-            : base(icon, x, y, color, name)
+        public Enemy(float x, float y, float speed, Actor target, string name = "Actor", string path = "")
+            : base( x, y, name, path)
         {
             _speed = speed;
             _target = target;
+            Forwards = new Vector2(-1, 0);
         }
 
         public override void Update(float deltaTime)
@@ -55,14 +56,13 @@ namespace MathForGames
 
         public override void Draw()
         {
-            Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 12, (int)Position.y - 17, 40, Icon.Color);
-            if (Raylib.IsKeyDown(KeyboardKey.KEY_TAB))
-                Collider.Draw();
+            base.Draw();
         }
 
         public bool GetTargetInSight()
         {
-            Vector2 directionOfTarget = (_target.Position - Position).Normalized;
+            Vector2 direction = Position - _target.Position;
+            Vector2 directionOfTarget = direction.Normalized;
 
             return Vector2.GetRadian(directionOfTarget, Forwards) < 0.75 && Vector2.Distance(_target.Position, Position) < 200;
         }

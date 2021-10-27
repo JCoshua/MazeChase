@@ -29,8 +29,8 @@ namespace MathForGames
             set { _velocity = value; }
         }
 
-        public Bullet(char icon, Vector2 position, Vector2 direction, float speed, Color color, Actor owner, string name = "Actor")
-            : base(icon, position, color, name)
+        public Bullet( Vector2 position, Vector2 direction, float speed, Actor owner, string name = "Actor", string path = "")
+            : base(position, name, path)
         {
             _speed = speed;
             _owner = owner;
@@ -44,11 +44,9 @@ namespace MathForGames
 
         }
 
-        public override void Draw()
+        public virtual void Draw()
         {
-            Raylib.DrawText(Icon.Symbol.ToString(), (int)Position.x - 6, (int)Position.y - 6, 40, Icon.Color);
-            if (Raylib.IsKeyDown(KeyboardKey.KEY_TAB))
-                Collider.Draw();
+            base.Draw();
         }
 
         public override void OnCollision(Actor actor)
