@@ -66,12 +66,12 @@ namespace MathForGames
             if (actor.Name == "HorizontalWall")
             {
                 Position -= Velocity;
-                Console.WriteLine("Collision Detection");
+                Console.WriteLine("Vertical Collision");
             }
-            else if(actor.Name == "VerticalWall")
+            else if (actor.Name == "VerticalWall")
             {
                 Position -= Velocity;
-                Console.WriteLine("Collision Detected");
+                Console.WriteLine("Horizontal Collision");
             }
         }
     }

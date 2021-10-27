@@ -41,6 +41,7 @@ namespace MathLibrary
         {
             if (Magnitude == 0)
                 return new Vector2();
+
             return this / Magnitude;
         }
 
@@ -63,7 +64,12 @@ namespace MathLibrary
         /// <returns>The Radian of the Angle</returns>
         public static double GetRadian(Vector2 lhs, Vector2 rhs)
         {
-            return Math.Acos(DotProduct(lhs, rhs));
+            float dotProduct = DotProduct(lhs, rhs);
+            if (dotProduct > 1)
+                dotProduct = 1;
+            if (dotProduct < -1)
+                dotProduct = -1;
+            return Math.Acos(dotProduct);
         }
 
         /// <summary>
@@ -73,6 +79,10 @@ namespace MathLibrary
         /// <returns>The Radian of the Angle</returns>
         public static double GetRadian(float dotProduct)
         {
+            if (dotProduct > 1)
+                dotProduct = 1;
+            if (dotProduct < -1)
+                dotProduct = -1;
             return Math.Acos(dotProduct);
         }
 
@@ -84,7 +94,12 @@ namespace MathLibrary
         /// <returns>The Degree of the Angle</returns>
         public static double GetDegree(Vector2 lhs, Vector2 rhs)
         {
-            return Math.Acos(DotProduct(lhs, rhs)) * (180 / Math.PI);
+            float dotProduct = DotProduct(lhs, rhs);
+            if (dotProduct > 1)
+                dotProduct = 1;
+            if (dotProduct < -1)
+                dotProduct = -1;
+            return Math.Acos(dotProduct) * (180 / Math.PI);
         }
 
         /// <summary>
@@ -94,6 +109,10 @@ namespace MathLibrary
         /// <returns>The Degree of the Angle</returns>
         public static double GetDegree(float dotProduct)
         {
+            if (dotProduct > 1)
+                dotProduct = 1;
+            if (dotProduct < -1)
+                dotProduct = -1;
             return Math.Acos(dotProduct) * (180 / Math.PI);
         }
 

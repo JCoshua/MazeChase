@@ -55,13 +55,13 @@ namespace MathForGames
 
         private void IntializeArena()
         {
-            Player player = new Player('@', 200, 200, 100, Color.BLUE, "Player");
-            player.Collider = new AABBCollider(30, 30, player);
-            Enemy enemy = new Enemy('A', 50, 125, 50, player, Color.RED, "Opponent");
-            enemy.Collider = new AABBCollider(30, 30, enemy);
+            Player player = new Player('@', 35, 215, 100, Color.BLUE, "Player");
+            player.Collider = new AABBCollider(28, 28, player);
+            Enemy enemy = new Enemy('A', 750, 215, 50, player, Color.RED, "Opponent");
+            enemy.Collider = new AABBCollider(28, 28, enemy);
             _currentScene.AddActor(player);
             _currentScene.AddActor(enemy);
-            for (int i = 21; i < 771; i++)
+            for (int i = 21; i < 770; i++)
             {
                 Actor upperWall = new Actor('-', i, 20, Color.WHITE, "HorizontalWall");
                 upperWall.Collider = new AABBCollider(19, 5, upperWall);
@@ -71,19 +71,31 @@ namespace MathForGames
                 _currentScene.AddActor(lowerWall);
             }
 
-            for (int i = 40; i < 390; i++)
+            for (int i = 40; i < 391; i++)
             {
                 Actor leftWall = new Actor('|', 15, i, Color.WHITE, "VerticalWall");
                 leftWall.Collider = new AABBCollider(5, 38, leftWall);
-                Actor rightWall = new Actor('|', 776, i, Color.WHITE, "VerticalWall");
+                Actor rightWall = new Actor('|', 775, i, Color.WHITE, "VerticalWall");
                 rightWall.Collider = new AABBCollider(5, 38, rightWall);
                 _currentScene.AddActor(leftWall);
                 _currentScene.AddActor(rightWall);
             }
 
-            //for (int i = 70; i < 151; i++)
-            //{
-            //}
+            for (int i = 75; i <= 350; i++)
+            {
+                if(i <= 170)
+                {
+                    Actor wall = new Actor('|', 60, i, Color.WHITE, "VerticalWall");
+                    wall.Collider = new AABBCollider(5, 38, wall);
+                    _currentScene.AddActor(wall);
+                }
+                else if(i >=260)
+                {
+                    Actor wall = new Actor('|', 60, i, Color.WHITE, "VerticalWall");
+                    wall.Collider = new AABBCollider(5, 38, wall);
+                    _currentScene.AddActor(wall);
+                }
+            }
         }
 
         public void BulletFired(Actor actor)

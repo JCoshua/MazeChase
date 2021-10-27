@@ -38,8 +38,6 @@ namespace MathForGames
             Vector2 moveDirection = (_target.Position - Position).Normalized;
 
             _fireTimer += deltaTime;
-
-            //Velocity = 0,0; Should not
             Vector2 Velocity = moveDirection * (Speed * deltaTime);
             if (GetTargetInSight())
             {
@@ -48,10 +46,11 @@ namespace MathForGames
 
                 if (_fireTimer >= 2)
                 {
-                    Engine.Manager.BulletFired(this);
+                    //Engine.Manager.BulletFired(this);
                     _fireTimer = 0;
                 }
             }
+            
         }
 
         public override void Draw()
@@ -65,21 +64,26 @@ namespace MathForGames
         {
             Vector2 directionOfTarget = (_target.Position - Position).Normalized;
 
-            double test = Vector2.GetRadian(directionOfTarget, Forwards);
-            return Vector2.GetRadian(directionOfTarget, Forwards) < 0.8 && Vector2.Distance(_target.Position, Position) < 200;
+            return Vector2.GetRadian(directionOfTarget, Forwards) < 0.75 && Vector2.Distance(_target.Position, Position) < 200;
         }
 
         public override void OnCollision(Actor actor)
         {
             if (actor.Name == "HorizontalWall")
             {
-                Position -= Velocity;
-                Console.WriteLine("Collision Detection");
+                if (Forwards.y > 0)
+                    Position += new Vector2(0, -Velocity.y) - new Vector2(0, 0.05f);
+                else if (Forwards.y < 0)
+                    Position += new Vector2(0, -Velocity.y) + new Vector2(0, 0.05f);
+                Console.WriteLine("Vertical Collision");
             }
             else if (actor.Name == "VerticalWall")
             {
-                Position -= Velocity;
-                Console.WriteLine("Collision Detected");
+                if (Forwards.x > 0)
+                    Position += new Vector2(-Velocity.x, 0) - new Vector2(0.05f, 0);
+                else if (Forwards.x < 0)
+                    Position += new Vector2(-Velocity.x, 0) + new Vector2(0.05f, 0);
+                Console.WriteLine("Horizontal Collision");
             }
         }
     }
