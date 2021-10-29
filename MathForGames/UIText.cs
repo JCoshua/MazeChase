@@ -37,6 +37,7 @@ namespace MathForGames
 
         public override void Update(float DeltaTime)
         {
+            base.Update(DeltaTime);
             if (Raylib.IsKeyDown(KeyboardKey.KEY_ENTER) && Name == "Start")
             {
                 Scene scene = new Scene("LoadScreen");

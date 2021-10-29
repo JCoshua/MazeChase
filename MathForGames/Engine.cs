@@ -75,7 +75,7 @@ namespace MathForGames
 
             //Create a window using RayLib
             Raylib.InitWindow(800, 450, "Math For Games");
-            Raylib.SetTargetFPS(2400);
+            Raylib.SetTargetFPS(60);
 
             Scene scene = new Scene("StartMenu");
             AddScene(scene);

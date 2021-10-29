@@ -31,6 +31,7 @@ namespace MathForGames
 
         public override void Update(float deltaTime)
         {
+            base.Update(deltaTime);
             //Get the player input direction
             int xDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_A)) + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_D));
             int yDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W)) + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
@@ -47,8 +48,8 @@ namespace MathForGames
             if (xDirection != 0 || yDirection != 0)
             {
                 Velocity = moveDirection.Normalized * Speed * deltaTime;
-                Position += Velocity;
                 Forwards = moveDirection;
+                Translate(Velocity.x, Velocity.y);
             }
         }
 

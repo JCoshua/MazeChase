@@ -39,12 +39,13 @@ namespace MathForGames
 
         public override void Update(float deltaTime)
         {
+            base.Update(deltaTime);
             Vector2 Velocity = Direction.Normalized * Speed * deltaTime;
             Position += Velocity;
-
+            Translate(Velocity.x, Velocity.y);
         }
 
-        public virtual void Draw()
+        public override void Draw()
         {
             base.Draw();
         }

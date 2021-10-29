@@ -36,6 +36,8 @@ namespace MathForGames
 
         public override void Update(float deltaTime)
         {
+            base.Update(deltaTime);
+
             Vector2 moveDirection = (_target.Position - Position).Normalized;
 
             _fireTimer += deltaTime;
@@ -50,6 +52,8 @@ namespace MathForGames
                     //Engine.Manager.BulletFired(this);
                     _fireTimer = 0;
                 }
+
+                Translate(Velocity.x, Velocity.y);
             }
             
         }

@@ -69,79 +69,79 @@ namespace MathForGames
         {
             Player player = new Player(35, 215, 100, "Player", "Images/player.png");
             player.Collider = new AABBCollider(28, 28, player);
-            player.SetScale(28, 28);
+            player.SetScale(1, 1);
             Enemy enemy = new Enemy(750, 215, 50, player, "Opponent", "Images/enemy.png");
             enemy.Collider = new AABBCollider(28, 28, enemy);
-            enemy.SetScale(28, 28);
+            enemy.SetScale(0.000000000000000001f, 0.000000000000000001f);
             _currentScene.AddActor(player);
             _currentScene.AddActor(enemy);
-            for (int i = 21; i < 770; i++)
-            {
-                Actor upperWall = new Actor( i+1, 20, "HorizontalWall", "Images/HorizontalWalls.png");
-                upperWall.Collider = new AABBCollider(19, 5, upperWall);
-                upperWall.SetScale(19, 5);
-                Actor lowerWall = new Actor(i-1, 405, "HorizontalWall", "Images/HorizontalWalls.png");
-                lowerWall.Collider = new AABBCollider(19, 5, lowerWall);
-                lowerWall.SetScale(19, 5);
-                _currentScene.AddActor(upperWall);
-                _currentScene.AddActor(lowerWall);
-            }
+            //for (int i = 21; i < 770; i++)
+            //{
+            //    Actor upperWall = new Actor( i+1, 20, "HorizontalWall", "Images/HorizontalWalls.png");
+            //    upperWall.Collider = new AABBCollider(19, 5, upperWall);
+            //    upperWall.SetScale(19, 5);
+            //    Actor lowerWall = new Actor(i-1, 405, "HorizontalWall", "Images/HorizontalWalls.png");
+            //    lowerWall.Collider = new AABBCollider(19, 5, lowerWall);
+            //    lowerWall.SetScale(19, 5);
+            //    _currentScene.AddActor(upperWall);
+            //    _currentScene.AddActor(lowerWall);
+            //}
 
-            for (int i = 40; i < 391; i++)
-            {
-                Actor leftWall = new Actor( 15, i, "VerticalWall", "Images/VerticalWalls.png");
-                leftWall.Collider = new AABBCollider(5, 38, leftWall);
-                leftWall.SetScale(5, 38);
-                Actor rightWall = new Actor(775, i, "VerticalWall", "Images/VerticalWalls.png");
-                rightWall.Collider = new AABBCollider(5, 38, rightWall);
-                rightWall.SetScale(5, 38);
-                _currentScene.AddActor(leftWall);
-                _currentScene.AddActor(rightWall);
-            }
+            //for (int i = 40; i < 391; i++)
+            //{
+            //    Actor leftWall = new Actor( 15, i, "VerticalWall", "Images/VerticalWalls.png");
+            //    leftWall.Collider = new AABBCollider(5, 38, leftWall);
+            //    leftWall.SetScale(5, 38);
+            //    Actor rightWall = new Actor(775, i, "VerticalWall", "Images/VerticalWalls.png");
+            //    rightWall.Collider = new AABBCollider(5, 38, rightWall);
+            //    rightWall.SetScale(5, 38);
+            //    _currentScene.AddActor(leftWall);
+            //    _currentScene.AddActor(rightWall);
+            //}
 
-            for (int i = 75; i <= 350; i++)
-            {
-                if(i <= 170)
-                {
-                    Actor wall = new Actor( 60, i, "VerticalWall", "Images/VerticalWalls.png");
-                    wall.Collider = new AABBCollider(5, 38, wall);
-                    wall.SetScale(5, 38);
-                    _currentScene.AddActor(wall);
-                }
-                else if(i >=260)
-                {
-                    Actor wall = new Actor( 60, i, "VerticalWall", "Images/VerticalWalls.png");
-                    wall.Collider = new AABBCollider(5, 38, wall);
-                    wall.SetScale(5, 38);
-                    _currentScene.AddActor(wall);
-                }
-            }
+            //for (int i = 75; i <= 350; i++)
+            //{
+            //    if(i <= 170)
+            //    {
+            //        Actor wall = new Actor( 60, i, "VerticalWall", "Images/VerticalWalls.png");
+            //        wall.Collider = new AABBCollider(5, 38, wall);
+            //        wall.SetScale(5, 38);
+            //        _currentScene.AddActor(wall);
+            //    }
+            //    else if(i >=260)
+            //    {
+            //        Actor wall = new Actor( 60, i, "VerticalWall", "Images/VerticalWalls.png");
+            //        wall.Collider = new AABBCollider(5, 38, wall);
+            //        wall.SetScale(5, 38);
+            //        _currentScene.AddActor(wall);
+            //    }
+            //}
 
-            for (int i = 75; i <= 350; i++)
-            {
-                if (i <= 170)
-                {
-                    Actor wall = new Actor(730, i, "VerticalWall", "Images/VerticalWalls.png");
-                    wall.Collider = new AABBCollider(5, 38, wall);
-                    wall.SetScale(5, 38);
-                    _currentScene.AddActor(wall);
-                }
-                else if (i >= 260)
-                {
-                    Actor wall = new Actor(730, i, "VerticalWall", "Images/VerticalWalls.png");
-                    wall.Collider = new AABBCollider(5, 38, wall);
-                    wall.SetScale(5, 38);
-                    _currentScene.AddActor(wall);
-                }
-            }
+            //for (int i = 75; i <= 350; i++)
+            //{
+            //    if (i <= 170)
+            //    {
+            //        Actor wall = new Actor(730, i, "VerticalWall", "Images/VerticalWalls.png");
+            //        wall.Collider = new AABBCollider(5, 38, wall);
+            //        wall.SetScale(5, 38);
+            //        _currentScene.AddActor(wall);
+            //    }
+            //    else if (i >= 260)
+            //    {
+            //        Actor wall = new Actor(730, i, "VerticalWall", "Images/VerticalWalls.png");
+            //        wall.Collider = new AABBCollider(5, 38, wall);
+            //        wall.SetScale(5, 38);
+            //        _currentScene.AddActor(wall);
+            //    }
+            //}
 
-            for (int i = 69; i <= 720; i++)
-            {
-                Actor wall = new Actor(i, 57, "HorizontalWall", "Images/HorizontalWalls.png");
-                wall.Collider = new AABBCollider(19, 5, wall);
-                wall.SetScale(19, 5);
-                _currentScene.AddActor(wall);
-            }
+            //for (int i = 69; i <= 720; i++)
+            //{
+            //    Actor wall = new Actor(i, 57, "HorizontalWall", "Images/HorizontalWalls.png");
+            //    wall.Collider = new AABBCollider(19, 5, wall);
+            //    wall.SetScale(19, 5);
+            //    _currentScene.AddActor(wall);
+            //}
         }
 
         private void LoadScreen()
